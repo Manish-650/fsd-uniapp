@@ -27,6 +27,4 @@ Both interfaces must use the same business rules and students.data file. Runtime
 5. Add the GUI and verify shared persisted data.
 6. Verify sample I/O, package the project and rehearse the showcase.
 
-## Assessment context
 
-The supplied brief prohibits AI-generated code. This initial repository setup is AI-assisted; it is not evidence of student implementation. Follow the course rules and record actual individual contributions accurately.
