@@ -4,7 +4,15 @@ Group 03 university enrolment project using Python and a planned Tkinter desktop
 
 ## Status
 
-Repository structure and planning notes only. The application is not implemented or runnable yet.
+The Subject model is implemented with six passing unit tests. Student, Database, CLI and GUI remain to be implemented; this is not yet a complete runnable application.
+
+Read [the Subject walkthrough](docs/SUBJECT_WALKTHROUGH.md) for explanations and an example.
+
+Run checks from the repository root:
+
+```bash
+python -m unittest discover -s tests -v
+```
 
 ## Structure
 
@@ -26,5 +34,3 @@ Both interfaces must use the same business rules and students.data file. Runtime
 4. Complete student and admin CLI functions.
 5. Add the GUI and verify shared persisted data.
 6. Verify sample I/O, package the project and rehearse the showcase.
-
-
