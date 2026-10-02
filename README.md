@@ -4,9 +4,9 @@ Group 03 university enrolment project using Python and a planned Tkinter desktop
 
 ## Status
 
-The Subject model is implemented with six passing unit tests. Student, Database, CLI and GUI remain to be implemented; this is not yet a complete runnable application.
+The Subject and Student models are implemented with 16 passing unit tests. Credential format validation, Database, CLI and GUI remain to be implemented; this is not yet a complete runnable application.
 
-Read [the Subject walkthrough](docs/SUBJECT_WALKTHROUGH.md) for explanations and an example.
+Read [the Subject walkthrough](docs/SUBJECT_WALKTHROUGH.md) and [the Student walkthrough](docs/STUDENT_WALKTHROUGH.md) for explanations and examples.
 
 Run checks from the repository root:
 
