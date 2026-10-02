@@ -12,7 +12,7 @@
 | `enrol(used_ids=())` | Generate and add a subject, stopping at four. Optional IDs exclude subjects used elsewhere. |
 | `remove_subject(subject_id)` | Remove a subject using its three-digit string ID. |
 | `average` | Calculate the mean of current subject marks; return None when empty. |
-| `change_password(...)` | Replace a nonblank password in memory. |
+| `change_password(...)` | Validate and replace a password in memory; check confirmation when supplied. |
 | `to_dict()` / `from_dict(...)` | Convert between objects and plain data without rerolling IDs or marks. |
 
 The average is calculated when read, so it automatically reflects enrolment and removal. A failed fifth enrolment or unknown removal leaves the student's data unchanged. Returning a list copy prevents callers from adding a fifth subject by directly appending to the list.
@@ -38,7 +38,7 @@ print(student.average)  # None
 - For now, average means the mean of currently enrolled subjects, without rounding. Empty enrolment has no average. Admin pass/fail and overall grading are still pending, including the brief's wording about four subjects.
 - Subject IDs are unique within this student. Supplying all other used IDs to enrol supports global uniqueness if the tutor requires it.
 - Student ID uniqueness depends on passing every existing student ID to create. Duplicate email checks will belong to registration/storage.
-- Name, email and password cannot be blank. Full email/password format validation and password confirmation are pending the shared CredentialValidator; this model alone does not implement those requirements.
+- Name, email and password cannot be blank. Email and password formats are now checked by the shared CredentialValidator during construction/restoration and password changes. Optional confirmation is checked before updating; future interfaces must request it. See CREDENTIALS_WALKTHROUGH.md for assumptions.
 - Passwords are currently plain strings in the in-memory model and dictionary. Use fictional sample credentials only; file persistence is not implemented yet.
 - Dictionary conversion does not save a file. Database is a later step.
 

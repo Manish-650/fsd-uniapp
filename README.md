@@ -4,9 +4,9 @@ Group 03 university enrolment project using Python and a planned Tkinter desktop
 
 ## Status
 
-The Subject and Student models are implemented with 16 passing unit tests. Credential format validation, Database, CLI and GUI remain to be implemented; this is not yet a complete runnable application.
+The Subject and Student models and shared CredentialValidator are implemented with 23 passing unit tests. Database, CLI and GUI remain to be implemented; this is not yet a complete runnable application.
 
-Read [the Subject walkthrough](docs/SUBJECT_WALKTHROUGH.md) and [the Student walkthrough](docs/STUDENT_WALKTHROUGH.md) for explanations and examples.
+Read [the Subject walkthrough](docs/SUBJECT_WALKTHROUGH.md) and [the Student walkthrough](docs/STUDENT_WALKTHROUGH.md) for explanations and examples. See [credential validation](docs/CREDENTIALS_WALKTHROUGH.md) for the current rules and assumptions.
 
 Run checks from the repository root:
 

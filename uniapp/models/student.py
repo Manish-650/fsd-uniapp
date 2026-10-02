@@ -3,6 +3,7 @@
 import random
 
 from uniapp.models.subject import Subject
+from uniapp.services.credential_validator import CredentialValidator
 
 
 class Student:
@@ -14,6 +15,8 @@ class Student:
         for label, value in (("Name", name), ("Email", email), ("Password", password)):
             if not isinstance(value, str) or not value.strip():
                 raise ValueError(f"{label} cannot be blank.")
+        CredentialValidator.validate_email(email)
+        CredentialValidator.validate_password(password)
         subjects = list(subjects) if subjects is not None else []
         if len(subjects) > self.MAX_SUBJECTS:
             raise ValueError("A student can enrol in at most four subjects.")
@@ -65,10 +68,10 @@ class Student:
                 return subject
         raise ValueError("Subject is not enrolled.")
 
-    def change_password(self, new_password):
-        # Credential format validation belongs to the shared validator (next step).
-        if not isinstance(new_password, str) or not new_password.strip():
-            raise ValueError("Password cannot be blank.")
+    def change_password(self, new_password, confirmation=None):
+        CredentialValidator.validate_password(new_password)
+        if confirmation is not None:
+            CredentialValidator.validate_confirmation(new_password, confirmation)
         self.password = new_password
 
     def to_dict(self):

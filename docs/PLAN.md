@@ -40,3 +40,7 @@ The GUI requires login, enrolment, subject-list and exception windows. The CLI o
 ## Delivery
 
 One integrated group ZIP, with accurate contributions and run instructions. Confirm the exact Canvas deadline (brief: Sunday Week 13) and lab number before naming group<group-number>-Cmp1<lab-number>.zip. All members must attend the Week 13 in-person showcase and explain their own work.
+
+## Credential implementation decision
+
+The shared CredentialValidator currently follows the written password rule: `[A-Z][A-Za-z]{4,}[0-9]{3,}`. It accepts Hello123 despite the conflicting example; tutor confirmation remains outstanding. Email uses common ASCII local-part characters (letters, digits, underscore, plus, percent, hyphen and separated dots) with the exact lowercase @university.com domain. Leading, trailing and consecutive dots, spaces and surrounding whitespace are rejected. This email pattern is a working assumption, not a confirmed additional requirement. Student construction/restoration and password changes use the validator. Password confirmation is supported when supplied; both future interfaces must request it. Authentication, duplicate-email checks and persistence remain pending.
