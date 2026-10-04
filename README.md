@@ -4,7 +4,7 @@ Group 03 university enrolment project using Python and a planned Tkinter desktop
 
 ## Status
 
-The student CLI is runnable: register, login, enrol, remove subjects, show results and change passwords. All changes are saved to students.data. There are 43 passing tests. Admin functions, GUI and exact sample-output matching remain pending.
+The student CLI is runnable: register, login, enrol, remove subjects, show results and change passwords. All changes are saved to students.data. Admin now supports listing, grade grouping, pass/fail/incomplete reporting, removal and confirmed clearing. There are 49 passing tests. GUI and exact sample-output matching remain pending.
 
 Read [the Subject walkthrough](docs/SUBJECT_WALKTHROUGH.md) and [the Student walkthrough](docs/STUDENT_WALKTHROUGH.md) for explanations and examples. See [credential validation](docs/CREDENTIALS_WALKTHROUGH.md) for the current rules and assumptions. The [Database walkthrough](docs/DATABASE_WALKTHROUGH.md) explains saving, loading and a runnable example.
 
@@ -14,7 +14,7 @@ Run the student CLI from the repository root (Python 3):
 python -m uniapp
 ```
 
-On Windows, `py -m uniapp` also works when the Python launcher is installed. Choose S, then r to register or l to log in. See [the CLI walkthrough](docs/CLI_WALKTHROUGH.md). Use fictional credentials: this local exercise stores passwords as plain text. Run only one instance at a time.
+On Windows, `py -m uniapp` also works when the Python launcher is installed. Choose S, then r to register or l to log in. Choose A for Admin; see [Admin instructions](docs/ADMIN_WALKTHROUGH.md). See [the CLI walkthrough](docs/CLI_WALKTHROUGH.md). Use fictional credentials: this local exercise stores passwords as plain text. Run only one instance at a time.
 
 Run checks from the repository root:
 

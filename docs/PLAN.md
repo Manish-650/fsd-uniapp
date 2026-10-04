@@ -51,4 +51,8 @@ Database uses a JSON list of student dictionaries in students.data at the reposi
 
 ## Student CLI milestone
 
-Run python -m uniapp. StudentService reloads a student before each mutation and saves before returning success. The CLI provides registration, login, enrolment, removal, results and confirmed password changes. Tests include a scripted CLI flow and a separate-process restart smoke check. Subject IDs remain unique per student under the documented working assumption. Admin selection currently reports that it is not implemented. Exact sample wording/indentation has not been verified against the brief screenshots; this remains a required final pass. Admin features are next, followed by GUI integration.
+Run python -m uniapp. StudentService reloads a student before each mutation and saves before returning success. The CLI provides registration, login, enrolment, removal, results and confirmed password changes. Tests include a scripted CLI flow and a separate-process restart smoke check. Subject IDs remain unique per student under the documented working assumption. Admin selection now opens the implemented Admin menu. Exact sample wording/indentation has not been verified against the brief screenshots; this remains a required final pass. GUI integration is next.
+
+## Admin reporting assumption
+
+Grade grouping uses the unrounded current average, with NO RESULT for zero subjects. Pass/fail requires four enrolled subjects: averages >=50 pass, lower averages fail. Students with zero to three subjects are displayed separately as INCOMPLETE pending tutor clarification. These are working decisions, not a claim of exact sample-output compliance. Admin reloads records for each report and uses Database for deletion/clear. Clear requires y confirmation in the CLI. Tests cover grade thresholds, fractional averages, four-subject pass/fail, empty records, refreshed reports, persisted deletion and cancellation.

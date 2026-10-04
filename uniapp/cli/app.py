@@ -1,11 +1,13 @@
-"""Student terminal interface. Admin menus are the next development stage."""
+"""Student and admin terminal interface."""
 
 from uniapp.services.student_service import StudentService
+from uniapp.services.admin_service import AdminService
 
 
 class CLIUniApp:
     def __init__(self, database, read=input, write=print):
         self.service = StudentService(database)
+        self.admin = AdminService(database)
         self.read = read
         self.write = write
 
@@ -19,7 +21,7 @@ class CLIUniApp:
                 if choice == "S":
                     self.student_menu()
                 elif choice == "A":
-                    self.write("Admin functions are not implemented yet.")
+                    self.admin_menu()
                 else:
                     self.write("Invalid option.")
         except (EOFError, KeyboardInterrupt):
@@ -81,3 +83,45 @@ class CLIUniApp:
                     self.write("        Invalid option.")
             except (ValueError, OSError) as error:
                 self.write(f"        Error: {error}")
+
+    def show_students(self, students):
+        if not students:
+            self.write("        No students.")
+        for student in students:
+            average = "N/A" if student.average is None else f"{student.average:.2f}"
+            self.write(f"        {student.id}: {student.name} ({student.email}) "
+                       f"subjects={len(student.subjects)}, average={average}, "
+                       f"grade={self.admin.grade(student)}")
+
+    def admin_menu(self):
+        while True:
+            choice = self.read(
+                "    Admin: (c) clear, (g) group, (p) partition, "
+                "(r) remove, (s) show, (x) exit: "
+            ).lower()
+            if choice == "x":
+                return
+            try:
+                if choice == "s":
+                    self.show_students(self.admin.list_students())
+                elif choice in ("g", "p"):
+                    groups = (self.admin.group_by_grade() if choice == "g"
+                              else self.admin.partition())
+                    for label, students in groups.items():
+                        self.write(f"    {label}:")
+                        self.show_students(students)
+                elif choice == "r":
+                    student_id = self.read("    Student ID: ")
+                    self.admin.remove(student_id)
+                    self.write(f"    Removed student {student_id}.")
+                elif choice == "c":
+                    confirmation = self.read("    Clear all students? (y/n): ").lower()
+                    if confirmation == "y":
+                        self.admin.clear()
+                        self.write("    Database cleared.")
+                    else:
+                        self.write("    Clear cancelled.")
+                else:
+                    self.write("    Invalid option.")
+            except (ValueError, OSError) as error:
+                self.write(f"    Error: {error}")
