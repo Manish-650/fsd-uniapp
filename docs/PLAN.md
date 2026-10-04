@@ -51,8 +51,12 @@ Database uses a JSON list of student dictionaries in students.data at the reposi
 
 ## Student CLI milestone
 
-Run python -m uniapp. StudentService reloads a student before each mutation and saves before returning success. The CLI provides registration, login, enrolment, removal, results and confirmed password changes. Tests include a scripted CLI flow and a separate-process restart smoke check. Subject IDs remain unique per student under the documented working assumption. Admin selection now opens the implemented Admin menu. Exact sample wording/indentation has not been verified against the brief screenshots; this remains a required final pass. GUI integration is next.
+Run python -m uniapp. StudentService reloads a student before each mutation and saves before returning success. The CLI provides registration, login, enrolment, removal, results and confirmed password changes. Tests include a scripted CLI flow and a separate-process restart smoke check. Subject IDs remain unique per student under the documented working assumption. Admin selection now opens the implemented Admin menu. Exact sample wording/indentation has not been verified against the brief screenshots; this remains a required final pass. GUI integration is implemented; desktop visual verification remains pending.
 
 ## Admin reporting assumption
 
 Grade grouping uses the unrounded current average, with NO RESULT for zero subjects. Pass/fail requires four enrolled subjects: averages >=50 pass, lower averages fail. Students with zero to three subjects are displayed separately as INCOMPLETE pending tutor clarification. These are working decisions, not a claim of exact sample-output compliance. Admin reloads records for each report and uses Database for deletion/clear. Clear requires y confirmation in the CLI. Tests cover grade thresholds, fractional averages, four-subject pass/fail, empty records, refreshed reports, persisted deletion and cancellation.
+
+## GUI milestone
+
+GUIUniApp uses StudentService and the same Database path as the CLI. It implements login, enrolment, subject-list and exception windows. Registration remains CLI-only. Login masks password input; logout closes account-specific windows. Six callback tests run without a display, covering invalid/blank login, persisted enrolment and fifth-subject rejection, logged-out protection, subject rendering values and logout. This environment has Tkinter but no graphical display, so actual window rendering and interaction require the manual desktop checklist in GUI_WALKTHROUGH.md. No claim of visual verification is made.
