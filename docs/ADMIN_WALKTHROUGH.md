@@ -4,7 +4,7 @@ Run `python -m uniapp` and choose A. Admin requires no login, as specified in th
 
 | Option | Action |
 | --- | --- |
-| s | List students with ID, name, email, subject count, average and grade |
+| s | List students with name, ID and email |
 | g | Group students by overall average grade |
 | p | Show PASS, FAIL and INCOMPLETE groups |
 | r | Remove a student by their six-digit ID |
@@ -29,6 +29,6 @@ The service itself has no confirmation prompt; CLIUniApp asks before calling cle
 
 ## Verification and remaining work
 
-All 49 tests pass. Six new Admin tests cover boundary/fractional averages, incomplete enrolment, fresh reporting, persisted removal/clear, cancelled clearing, empty data and invalid IDs.
+59 tests pass across the project; one desktop GUI test is skipped without a display. Six new Admin tests cover boundary/fractional averages, incomplete enrolment, fresh reporting, persisted removal/clear, cancelled clearing, empty data and invalid IDs.
 
-GUI is next. Exact sample wording/indentation still requires a final review. Earlier walkthroughs describe earlier milestones; this document supersedes their statements that Admin is pending.
+GUI is implemented and sample wording has been reviewed. See VERIFICATION.md for the remaining differences and desktop verification.

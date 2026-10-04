@@ -40,4 +40,4 @@ On your desktop:
 - Exit the GUI, run the CLI and confirm the same subjects appear there.
 - Check the windows fit your screen, all buttons are visible, and closing windows works as described.
 
-All 55 automated tests pass, including six display-free GUI callback tests. Successful login window creation and real widget interaction remain part of the desktop checks above. Exact CLI sample-output matching and the earlier tutor clarifications also remain open.
+59 automated tests pass, including six display-free GUI callback tests. One additional real-widget integration test is skipped here because no desktop display is available. Run `python -m unittest discover -s tests -p test_gui_desktop.py -v` on your laptop to exercise CLI registration, GUI login, real subject widgets, four enrolments, fifth-subject error and logout. Actual appearance still needs the checklist above. CLI sample wording has been reviewed; documented differences and tutor clarifications remain in VERIFICATION.md.

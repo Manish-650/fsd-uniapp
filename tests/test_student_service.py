@@ -75,7 +75,7 @@ class StudentWorkflowTests(unittest.TestCase):
         self.assertEqual(before, self.path.read_bytes())
 
     def test_cli_register_login_enrol_change_password_and_exit(self):
-        commands = iter(["S", "r", "Manish", "manish@university.com", "Example123",
+        commands = iter(["S", "r", "manish@university.com", "Example123", "Manish",
                          "l", "manish@university.com", "Example123", "e", "s", "c",
                          "Updated123", "Updated123", "x", "x", "X"])
         output = []
@@ -83,14 +83,14 @@ class StudentWorkflowTests(unittest.TestCase):
         saved = self.service.login("manish@university.com", "Updated123")
         self.assertEqual(len(saved.subjects), 1)
         self.assertTrue(any("grade" in line for line in output))
-        self.assertEqual(output[-1], "Goodbye.")
+        self.assertEqual(output[-1], "Thank You")
 
     def test_cli_failed_login_and_invalid_menu_recover(self):
         commands = iter(["?", "S", "l", "missing@university.com", "Wrong123", "x", "X"])
         output = []
         CLIUniApp(self.db, read=lambda prompt: next(commands), write=output.append).run()
         self.assertIn("Invalid option.", output)
-        self.assertTrue(any("Incorrect email or password" in line for line in output))
+        self.assertTrue(any("Student does not exist" in line for line in output))
         self.assertFalse(any("Welcome" in line for line in output))
 
     def test_cli_eof_exits_cleanly(self):
@@ -98,7 +98,7 @@ class StudentWorkflowTests(unittest.TestCase):
             raise EOFError
         output = []
         CLIUniApp(self.db, read=end_input, write=output.append).run()
-        self.assertIn("Goodbye.", output[-1])
+        self.assertIn("Thank You", output[-1])
 
 
 if __name__ == "__main__":

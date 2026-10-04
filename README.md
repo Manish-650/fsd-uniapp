@@ -4,7 +4,7 @@ Group 03 university enrolment project using Python and a Tkinter desktop GUI.
 
 ## Status
 
-The student CLI is runnable: register, login, enrol, remove subjects, show results and change passwords. All changes are saved to students.data. Admin now supports listing, grade grouping, pass/fail/incomplete reporting, removal and confirmed clearing. The student GUI provides login, enrolment, subject listing and error windows using the same data file. There are 55 passing tests. GUI visual verification on a desktop and exact CLI sample-output matching remain pending.
+The student CLI is runnable: register, login, enrol, remove subjects, show results and change passwords. All changes are saved to students.data. Admin now supports listing, grade grouping, pass/fail/incomplete reporting, removal and confirmed clearing. The student GUI provides login, enrolment, subject listing and error windows using the same data file. There are 59 passing tests and one desktop GUI test skipped in the headless development environment. CLI wording and interaction flow have been reviewed against the sample screenshots; remaining differences and desktop checks are recorded in [verification notes](docs/VERIFICATION.md).
 
 Read [the Subject walkthrough](docs/SUBJECT_WALKTHROUGH.md) and [the Student walkthrough](docs/STUDENT_WALKTHROUGH.md) for explanations and examples. See [credential validation](docs/CREDENTIALS_WALKTHROUGH.md) for the current rules and assumptions. The [Database walkthrough](docs/DATABASE_WALKTHROUGH.md) explains saving, loading and a runnable example.
 

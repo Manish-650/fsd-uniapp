@@ -60,3 +60,7 @@ Grade grouping uses the unrounded current average, with NO RESULT for zero subje
 ## GUI milestone
 
 GUIUniApp uses StudentService and the same Database path as the CLI. It implements login, enrolment, subject-list and exception windows. Registration remains CLI-only. Login masks password input; logout closes account-specific windows. Six callback tests run without a display, covering invalid/blank login, persisted enrolment and fifth-subject rejection, logged-out protection, subject rendering values and logout. This environment has Tkinter but no graphical display, so actual window rendering and interaction require the manual desktop checklist in GUI_WALKTHROUGH.md. No claim of visual verification is made.
+
+## Sample review milestone
+
+The sample screenshots on pages 3-7 were visually reviewed. CLI prompts, registration order, credential retries, subject rows, password-confirmation retries and Admin output now follow their wording and structure. Eight spaces per menu level are used; screenshots are cropped/scaled, so exact pixel-equivalent whitespace is not asserted. Plain text is used without sample terminal colours. Three-digit IDs are retained consistently, including enrolment messages. Existing written-rule password and INCOMPLETE decisions remain documented exceptions. See VERIFICATION.md. Current test run: 60 discovered, 59 passed, one real-widget desktop test skipped because no display exists.

@@ -69,7 +69,7 @@ class AdminTests(unittest.TestCase):
         output = []
         CLIUniApp(self.db, lambda prompt: next(commands), output.append).run()
         self.assertEqual([s.id for s in self.db.get_all()], ["000002"])
-        self.assertIn("    Clear cancelled.", output)
+        self.assertNotIn("        Students data cleared", output)
         self.assertFalse(any("Example123" in line for line in output))
         commands = iter(["A", "c", "y", "x", "X"])
         CLIUniApp(self.db, lambda prompt: next(commands), output.append).run()
@@ -80,9 +80,9 @@ class AdminTests(unittest.TestCase):
         commands = iter(["A", "s", "r", "bad", "?", "x", "X"])
         output = []
         CLIUniApp(self.db, lambda prompt: next(commands), output.append).run()
-        self.assertIn("        No students.", output)
-        self.assertIn("    Error: Student not found.", output)
-        self.assertEqual(output[-1], "Goodbye.")
+        self.assertIn("                < Nothing to Display >", output)
+        self.assertIn("        Student bad does not exist", output)
+        self.assertEqual(output[-1], "Thank You")
 
 
 if __name__ == "__main__":
