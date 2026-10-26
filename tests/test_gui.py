@@ -56,6 +56,48 @@ class GuiCallbackTests(unittest.TestCase):
         self.app.enrol()
         self.assertEqual(self.path.read_bytes(), before)
 
+    def test_removal_saves_and_refreshes_and_allows_reenrolment(self):
+        self.app.student_id = self.student.id
+        subjects = [self.service.enrol(self.student.id) for _ in range(4)]
+        self.app.table = Mock()
+        self.app.table.selection.return_value = ("selected",)
+        self.app.table.item.return_value = (subjects[0].id, subjects[0].mark, subjects[0].grade)
+        self.app.refresh_subjects = Mock()
+        self.app.remove_subject()
+        saved = Database(self.path).get_by_id(self.student.id)
+        self.assertEqual([s.id for s in saved.subjects], [s.id for s in subjects[1:]])
+        self.app.status.set.assert_called_with(f"Dropped {subjects[0].id}. Subjects enrolled: 3/4")
+        self.assertEqual(len(self.app.refresh_subjects.call_args.args[0].subjects), 3)
+        self.app.enrol()
+        self.assertEqual(len(Database(self.path).get_by_id(self.student.id).subjects), 4)
+        self.app.show_error.assert_not_called()
+
+    def test_removal_without_selection_does_not_change_data(self):
+        self.app.student_id = self.student.id
+        self.app.table = Mock()
+        self.app.table.selection.return_value = ()
+        before = self.path.read_bytes()
+        self.app.remove_subject()
+        self.assertEqual(self.path.read_bytes(), before)
+        self.app.show_error.assert_called_once_with("Select a subject to remove.")
+
+    def test_removal_of_stale_selection_shows_existing_service_error(self):
+        self.app.student_id = self.student.id
+        subject = self.service.enrol(self.student.id)
+        self.service.remove_subject(self.student.id, subject.id)
+        self.app.table = Mock()
+        self.app.table.selection.return_value = ("selected",)
+        self.app.table.item.return_value = (subject.id, subject.mark, subject.grade)
+        before = self.path.read_bytes()
+        self.app.remove_subject()
+        self.assertEqual(self.path.read_bytes(), before)
+        self.assertEqual(str(self.app.show_error.call_args.args[0]), "Subject is not enrolled.")
+
+    def test_logged_out_removal_does_nothing(self):
+        before = self.path.read_bytes()
+        self.app.remove_subject()
+        self.assertEqual(self.path.read_bytes(), before)
+
     def test_subject_table_uses_saved_values(self):
         self.service.enrol(self.student.id)
         student = self.service.get_student(self.student.id)

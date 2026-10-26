@@ -40,6 +40,17 @@ class GuiDesktopTests(unittest.TestCase):
             self.assertTrue(app.error_window.winfo_exists())
             self.assertEqual(db.path.read_bytes(), before)
             app.error_window.destroy()
+            selected = app.table.get_children()[0]
+            subject_id = str(app.table.item(selected, 'values')[0])
+            app.table.selection_set(selected)
+            app.remove_subject()
+            root.update()
+            self.assertEqual(len(app.table.get_children()), 3)
+            self.assertNotIn(subject_id, [s.id for s in Database(db.path).get_by_id(app.student_id).subjects])
+            self.assertIn('3/4', app.status.get())
+            app.enrol()
+            root.update()
+            self.assertEqual(len(app.table.get_children()), 4)
             student_id = app.student_id
             app.logout()
             root.update()

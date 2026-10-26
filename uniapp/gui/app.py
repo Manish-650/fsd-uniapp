@@ -100,16 +100,33 @@ class GUIUniApp:
             frame = ttk.Frame(window, padding=20)
             frame.pack(fill="both", expand=True)
             self.table = ttk.Treeview(frame, columns=("id", "mark", "grade"),
-                                      show="headings", height=4)
+                                      show="headings", height=4, selectmode="browse")
             for column, heading in (("id", "Subject ID"), ("mark", "Mark"), ("grade", "Grade")):
                 self.table.heading(column, text=heading)
                 self.table.column(column, width=110, anchor="center")
             self.table.pack(fill="both", expand=True)
             self.average = tk.StringVar()
             ttk.Label(frame, textvariable=self.average).pack(pady=10)
+            ttk.Button(frame, text="Remove selected subject", command=self.remove_subject).pack(pady=4)
             ttk.Button(frame, text="Refresh", command=self.show_subjects).pack()
         self.refresh_subjects(student)
         self.subject_window.lift()
+
+    def remove_subject(self):
+        if self.student_id is None:
+            return
+        selection = self.table.selection()
+        if not selection:
+            self.show_error("Select a subject to remove.")
+            return
+        subject_id = str(self.table.item(selection[0], "values")[0])
+        try:
+            self.service.remove_subject(self.student_id, subject_id)
+            student = self.service.get_student(self.student_id)
+            self.status.set(f"Dropped {subject_id}. Subjects enrolled: {len(student.subjects)}/4")
+            self.refresh_subjects(student)
+        except (ValueError, OSError) as error:
+            self.show_error(error)
 
     def refresh_subjects(self, student):
         for item in self.table.get_children():
