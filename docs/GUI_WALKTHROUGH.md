@@ -12,7 +12,7 @@ On Windows, `py -m uniapp.gui` can be used with the Python launcher. Python must
 
 ## Four windows
 
-1. Login: enter an existing student's email/password. Password input is masked.
+1. Login: the window opens centered at one-fifth of the screen width and height. Enter an existing student's email/password; password input is masked.
 2. Enrolment: enrol in a subject, view subjects or log out.
 3. Subjects: shows IDs, marks and grades from saved records, plus the current average. Select a row and click **Remove selected subject** to drop it. The removal saves immediately and updates the table, average and enrolment count. Removing without selecting a row displays an error.
 4. Error: displays blank-input, invalid-credential, enrolment-limit and file errors.

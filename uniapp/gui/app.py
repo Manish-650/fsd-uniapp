@@ -15,7 +15,7 @@ class GUIUniApp:
         self.subject_window = None
         self.error_window = None
         root.title("UniApp - Student Login")
-        root.minsize(420, 240)
+        self._center_window(root)
         frame = ttk.Frame(root, padding=24)
         frame.pack(fill="both", expand=True)
         ttk.Label(frame, text="Student Login", font=("Arial", 18)).pack(pady=(0, 12))
@@ -29,6 +29,16 @@ class GUIUniApp:
         ttk.Label(frame, text="Register through the terminal app first.").pack(pady=10)
         root.bind("<Return>", lambda event: self.login())
         self.email.focus_set()
+
+    @staticmethod
+    def _center_window(window):
+        screen_width = window.winfo_screenwidth()
+        screen_height = window.winfo_screenheight()
+        width = screen_width // 5
+        height = screen_height // 5
+        x = (screen_width - width) // 2
+        y = (screen_height - height) // 2
+        window.geometry(f"{width}x{height}+{x}+{y}")
 
     def show_error(self, message):
         if self.error_window is not None and self.error_window.winfo_exists():
