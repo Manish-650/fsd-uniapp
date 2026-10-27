@@ -164,8 +164,17 @@ class GUIUniApp:
             ttk.Label(frame, textvariable=self.average).pack(pady=10)
             ttk.Button(frame, text="Remove selected subject", command=self.remove_subject).pack(pady=4)
             ttk.Button(frame, text="Refresh", command=self.show_subjects).pack()
+            ttk.Button(frame, text="Back", command=self.back_to_enrolment).pack(pady=4)
         self.refresh_subjects(student)
         self.subject_window.lift()
+
+    def back_to_enrolment(self):
+        if self.student_id is None or self.subject_window is None:
+            return
+        self.subject_window.destroy()
+        self.subject_window = None
+        self.enrolment_window.deiconify()
+        self.enrolment_window.lift()
 
     def remove_subject(self):
         if self.student_id is None:

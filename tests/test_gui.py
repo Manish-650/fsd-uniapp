@@ -105,6 +105,17 @@ class GuiCallbackTests(unittest.TestCase):
         self.app.remove_subject()
         self.assertEqual(self.path.read_bytes(), before)
 
+    def test_back_from_subjects_returns_to_enrolment(self):
+        self.app.student_id = self.student.id
+        subject_window = Mock()
+        self.app.subject_window = subject_window
+        self.app.enrolment_window = Mock()
+        self.app.back_to_enrolment()
+        subject_window.destroy.assert_called_once()
+        self.assertIsNone(self.app.subject_window)
+        self.app.enrolment_window.deiconify.assert_called_once()
+        self.app.enrolment_window.lift.assert_called_once()
+
     def test_subject_table_uses_saved_values(self):
         self.service.enrol(self.student.id)
         student = self.service.get_student(self.student.id)
