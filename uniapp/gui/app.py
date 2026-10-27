@@ -1,6 +1,9 @@
 """Tkinter interface for already registered students."""
 
+import ctypes
+import sys
 import tkinter as tk
+from ctypes import wintypes
 from tkinter import ttk
 
 from uniapp.services.student_service import StudentService
@@ -15,7 +18,7 @@ class GUIUniApp:
         self.subject_window = None
         self.error_window = None
         root.title("UniApp - Student Login")
-        self._center_window(root)
+        self._configure_window(root)
         frame = ttk.Frame(root, padding=24)
         frame.pack(fill="both", expand=True)
         ttk.Label(frame, text="Student Login", font=("Arial", 18)).pack(pady=(0, 12))
@@ -30,15 +33,55 @@ class GUIUniApp:
         root.bind("<Return>", lambda event: self.login())
         self.email.focus_set()
 
+    @classmethod
+    def _configure_window(cls, window):
+        cls._center_window(window)
+        cls._set_dark_title_bar(window)
+
     @staticmethod
     def _center_window(window):
         screen_width = window.winfo_screenwidth()
         screen_height = window.winfo_screenheight()
-        width = screen_width // 5
-        height = screen_height // 5
+        width = screen_width // 4
+        height = screen_height // 4
         x = (screen_width - width) // 2
         y = (screen_height - height) // 2
         window.geometry(f"{width}x{height}+{x}+{y}")
+
+    @staticmethod
+    def _set_dark_title_bar(window):
+        if sys.platform != "win32":
+            return
+
+        window.update_idletasks()
+        user32 = ctypes.WinDLL("user32", use_last_error=True)
+        get_ancestor = user32.GetAncestor
+        get_ancestor.argtypes = (wintypes.HWND, wintypes.UINT)
+        get_ancestor.restype = wintypes.HWND
+        hwnd = get_ancestor(window.winfo_id(), 2)
+
+        dwmapi = ctypes.WinDLL("dwmapi")
+        set_attribute = dwmapi.DwmSetWindowAttribute
+        set_attribute.argtypes = (
+            wintypes.HWND, wintypes.DWORD, ctypes.c_void_p, wintypes.DWORD)
+        set_attribute.restype = wintypes.LONG
+
+        colors_applied = True
+        for attribute, color in ((35, 0x202020), (36, 0xF0F0F0), (34, 0x202020)):
+            value = wintypes.DWORD(color)
+            if set_attribute(hwnd, attribute, ctypes.byref(value), ctypes.sizeof(value)) != 0:
+                colors_applied = False
+                break
+        if colors_applied:
+            return
+
+        dark_mode_value = wintypes.BOOL(True)
+        for attribute in (20, 19):
+            if set_attribute(
+                    hwnd, attribute, ctypes.byref(dark_mode_value),
+                    ctypes.sizeof(dark_mode_value)) == 0:
+                return
+        raise OSError("Windows could not apply the dark title bar.")
 
     def show_error(self, message):
         if self.error_window is not None and self.error_window.winfo_exists():
@@ -48,6 +91,7 @@ class GUIUniApp:
         self.error_window = window
         window.title("UniApp - Error")
         window.transient(parent)
+        self._configure_window(window)
         frame = ttk.Frame(window, padding=20)
         frame.pack(fill="both", expand=True)
         ttk.Label(frame, text=str(message), wraplength=360).pack(pady=(0, 15))
@@ -72,7 +116,7 @@ class GUIUniApp:
         window = tk.Toplevel(self.root)
         self.enrolment_window = window
         window.title("UniApp - Enrolment")
-        window.minsize(420, 230)
+        self._configure_window(window)
         window.protocol("WM_DELETE_WINDOW", self.logout)
         frame = ttk.Frame(window, padding=24)
         frame.pack(fill="both", expand=True)
@@ -107,6 +151,7 @@ class GUIUniApp:
             window = tk.Toplevel(self.enrolment_window)
             self.subject_window = window
             window.title("UniApp - Subjects")
+            self._configure_window(window)
             frame = ttk.Frame(window, padding=20)
             frame.pack(fill="both", expand=True)
             self.table = ttk.Treeview(frame, columns=("id", "mark", "grade"),

@@ -25,12 +25,12 @@ class GuiCallbackTests(unittest.TestCase):
         self.app.status = Mock()
         self.app.subject_window = None
 
-    def test_login_window_is_one_fifth_screen_size_and_centered(self):
+    def test_window_is_one_quarter_screen_size_and_centered(self):
         window = Mock()
         window.winfo_screenwidth.return_value = 1920
         window.winfo_screenheight.return_value = 1080
         GUIUniApp._center_window(window)
-        window.geometry.assert_called_once_with("384x216+768+432")
+        window.geometry.assert_called_once_with("480x270+720+405")
 
     def test_blank_login_stays_logged_out(self):
         self.app.email.get.return_value = " "
